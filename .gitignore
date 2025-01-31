@@ -1,4 +1,6 @@
 .DS_Store
-hbase-data-prep/
-dataset/
+hbase-data-prep/target/
+hbase-data-prep/.idea/
 hbase-queries/target/
+hbase-queries/.idea/
+dataset/
