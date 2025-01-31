@@ -55,4 +55,8 @@
     <name>hbase.zookeeper.property.dataDir</name>
     <value>/usr/local/zookeeper</value>
   </property>
+  <property>
+    <name>hbase.coprocessor.region.classes</name>
+    <value>org.apache.hadoop.hbase.coprocessor.AggregateImplementation</value>
+  </property>
 </configuration>

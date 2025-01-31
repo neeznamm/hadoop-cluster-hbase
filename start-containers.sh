@@ -11,12 +11,10 @@ docker run -itd \
                 --net=hadoop \
                 -p 50070:50070 \
                 -p 8088:8088 \
-				-p 16010:16010 \
+		-p 16010:16010 \
                 --name hadoop-master \
                 --hostname hadoop-master \
-                hadoop-2.10.2 &> /dev/null
-
-docker cp hbase-conf/hbase-site-master.xml hadoop-master:$HBASE_HOME/conf/hbase-site.xml
+                hadoop-cluster-hbase:2.6.1-2.10.2-master &> /dev/null
 
 # start hadoop slave container
 i=1
@@ -28,12 +26,12 @@ do
 	                --net=hadoop \
 	                --name hadoop-slave$i \
 	                --hostname hadoop-slave$i \
-	                hadoop-2.10.2 &> /dev/null
+	                hadoop-cluster-hbase:2.6.1-2.10.2 &> /dev/null
 	i=$(( $i + 1 ))
 done
 
-docker cp hbase-conf/hbase-site-slave1.xml hadoop-slave1:$HBASE_HOME/conf/hbase-site.xml
-docker cp hbase-conf/hbase-site-slave2.xml hadoop-slave2:$HBASE_HOME/conf/hbase-site.xml 
+docker cp hbase-conf/hbase-site-slave1.xml hadoop-slave1:/usr/local/hbase/conf/hbase-site.xml
+docker cp hbase-conf/hbase-site-slave2.xml hadoop-slave2:/usr/local/hbase/conf/hbase-site.xml 
 
 # get into hadoop master container
 docker exec -it hadoop-master bash

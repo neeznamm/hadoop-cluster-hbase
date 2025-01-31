@@ -1,0 +1,7 @@
+FROM hadoop-cluster-hbase:2.6.1-2.10.2
+
+COPY ./dataset/ /dataset
+COPY ./hbase-data-prep/target/ $HBASE_HOME/data-prep
+COPY ./hbase-queries/target/ $HBASE_HOME/queries
+
+RUN rm -rf $HBASE_HOME/conf/hbase-site-slave*.xml
