@@ -18,7 +18,7 @@ public class QueryExecutor {
         config.set("zookeeper.znode.parent", "/hbase");
 
         try (Connection connection = ConnectionFactory.createConnection(config)) {
-            List<String> queries = Arrays.asList("Query1", "Query2", "Query3", "Query4", "Query5", "Query6", "Query7");
+            List<String> queries = Arrays.asList("WarmupQuery", "Query1", "Query2", "Query3", "Query4", "Query5", "Query6", "Query7");
 
             for (String queryName : queries) {
                 System.out.println("---------------- " + queryName + ":\n");
@@ -27,7 +27,7 @@ public class QueryExecutor {
                 Constructor<?> constructor = queryClass.getConstructor(Connection.class);
                 Query queryInstance = (Query) constructor.newInstance(connection);
 
-                long totalExecutionTime = 0;
+                double totalExecutionTime = 0;
                 String result = null;
 
                 for (int i = 1; i <= NUM_EXECUTIONS; ++i) {
@@ -35,13 +35,13 @@ public class QueryExecutor {
                     result = queryInstance.execute();
                     long endTime = System.nanoTime();
 
-                    long durationMs = (endTime - startTime) / 1_000_000;
+                    double durationMs = (endTime - startTime) / 1_000_000.0;
                     totalExecutionTime += durationMs;
                 }
 
-                long avgExecutionTime = totalExecutionTime / NUM_EXECUTIONS;
+                double avgExecutionTime = totalExecutionTime / NUM_EXECUTIONS;
                 System.out.println(result);
-                System.out.println(avgExecutionTime + " ms\n");
+                System.out.printf("%.2f ms\n\n", avgExecutionTime);
             }
         } catch (Throwable e) {
             e.printStackTrace();

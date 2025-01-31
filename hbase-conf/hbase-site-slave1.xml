@@ -56,6 +56,10 @@
     <value>/usr/local/zookeeper</value>
   </property>
   <property>
+    <name>hbase.coprocessor.region.classes</name>
+    <value>org.apache.hadoop.hbase.coprocessor.AggregateImplementation</value>
+  </property>
+  <property>
     <name>hbase.regionserver.hostname</name>
     <value>hadoop-slave1</value>
     <description>This config is for experts: don't set its value unless you really know what you are doing.

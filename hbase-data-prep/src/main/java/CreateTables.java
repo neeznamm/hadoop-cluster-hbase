@@ -16,48 +16,43 @@ public class CreateTables {
     }
 
     public void createAllTables() throws IOException {
-            Admin admin = connection.getAdmin();
-
+        try (Admin admin = connection.getAdmin()) {
             createMeasurementsTable(admin);
             createItemsTable(admin);
             createStationsTable(admin);
-
-            admin.close();
+        }
     }
 
     private static void createMeasurementsTable(Admin admin) throws IOException {
         HTableDescriptor tableDescriptor = new HTableDescriptor(TableName.valueOf("measurements"));
-
         tableDescriptor.addFamily(new HColumnDescriptor("measurement"));
         tableDescriptor.addFamily(new HColumnDescriptor("instrument"));
 
-        byte[][] splits = {
-                Bytes.toBytes("2017-06-01 00:00"),
-                Bytes.toBytes("2018-01-01 00:00"),
-                Bytes.toBytes("2018-06-01 00:00"),
-                Bytes.toBytes("2019-01-01 00:00"),
-                Bytes.toBytes("2019-06-01 00:00")
-        };
+        byte[][] splits = {Bytes.toBytes("2018-06-01 00:00")};
 
         admin.createTable(tableDescriptor, splits);
-        System.out.println("created 'measurements' table");
+        System.out.println("Created 'measurements' table with one split at 2018-06-01 00:00");
     }
 
     private static void createItemsTable(Admin admin) throws IOException {
         HTableDescriptor tableDescriptor = new HTableDescriptor(TableName.valueOf("items"));
+        HColumnDescriptor columnDescriptor = new HColumnDescriptor("info");
 
-        tableDescriptor.addFamily(new HColumnDescriptor("info"));
+        columnDescriptor.setInMemory(true);
+        tableDescriptor.addFamily(columnDescriptor);
 
         admin.createTable(tableDescriptor);
-        System.out.println("created 'items' table");
+        System.out.println("Created 'items' table (stored in memory)");
     }
 
     private static void createStationsTable(Admin admin) throws IOException {
         HTableDescriptor tableDescriptor = new HTableDescriptor(TableName.valueOf("stations"));
+        HColumnDescriptor columnDescriptor = new HColumnDescriptor("info");
 
-        tableDescriptor.addFamily(new HColumnDescriptor("info"));
+        columnDescriptor.setInMemory(true);
+        tableDescriptor.addFamily(columnDescriptor);
 
         admin.createTable(tableDescriptor);
-        System.out.println("created 'stations' table");
+        System.out.println("Created 'stations' table (stored in memory)");
     }
 }
