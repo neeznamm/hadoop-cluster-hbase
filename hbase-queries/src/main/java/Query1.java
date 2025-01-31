@@ -16,7 +16,7 @@ public class Query1 extends Query {
     @Override
     public String execute() throws Throwable {
 
-        Get get = new Get(Bytes.toBytes("101"));
+        Get get = new Get(Bytes.toBytes("108"));
         get.addColumn(Bytes.toBytes("info"), Bytes.toBytes("address"));
         get.addColumn(Bytes.toBytes("info"), Bytes.toBytes("latitude"));
         get.addColumn(Bytes.toBytes("info"), Bytes.toBytes("longitude"));
