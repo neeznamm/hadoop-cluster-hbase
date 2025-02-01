@@ -24,7 +24,7 @@ public class Query6 extends Query {
 
         Scan scan = new Scan();
         scan.addColumn(Bytes.toBytes("measurement"), o3IdBytes);
-        scan.setFilter(new RowFilter(CompareOperator.EQUAL, new RegexStringComparator("^2018-01-\\d{2} \\d{2}:\\d{2}\\+101$")));
+        scan.setFilter(new RowFilter(CompareOperator.EQUAL, new RegexStringComparator("^2017-01-\\d{2} \\d{2}:\\d{2}\\+101$")));
 
         AggregationClient aggregationClient = new AggregationClient(connection.getConfiguration());
         ColumnInterpreter<Double, Double, HBaseProtos.EmptyMsg, HBaseProtos.DoubleMsg, HBaseProtos.DoubleMsg> columnInterpreter = new DoubleColumnInterpreter();
