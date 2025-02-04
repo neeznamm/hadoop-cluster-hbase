@@ -12,7 +12,7 @@ import org.apache.hadoop.hbase.protobuf.generated.HBaseProtos;
 import org.apache.hadoop.hbase.util.Bytes;
 
 /**
- * Q5. Да се најде колку пати во 2018 е измерена вредност на CO поголема од 15 (кај сите станици вкупно).
+ * Q5. Да се најде колку пати во 2018 е измерена вредност на CO помеѓу 2 и 9 (кај сите станици вкупно).
  */
 public class Query5 extends Query {
 
@@ -45,8 +45,14 @@ public class Query5 extends Query {
         filterList.addFilter(new SingleColumnValueFilter(
                 Bytes.toBytes("measurement"),
                 coIdBytes,
-                CompareOperator.GREATER,
+                CompareOperator.GREATER_OR_EQUAL,
                 Bytes.toBytes(2.0)
+        ));
+        filterList.addFilter(new SingleColumnValueFilter(
+                Bytes.toBytes("measurement"),
+                coIdBytes,
+                CompareOperator.LESS_OR_EQUAL,
+                Bytes.toBytes(9.0)
         ));
         scan.setFilter(filterList);
 
